@@ -1,3 +1,4 @@
+#docker-compose-sql
 services:
    db:
      image: mysql:latest
