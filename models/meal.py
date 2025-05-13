@@ -1,6 +1,7 @@
 from database import db
 from datetime import datetime
 
+#DB-MEAL--
 class Meal(db.Model):
   # id (int), name (text), description (text), date (Date), time (time), is_in_diet (boolean), user_id (ForeignKey)
   id = db.Column(db.Integer, unique=True, primary_key=True)
