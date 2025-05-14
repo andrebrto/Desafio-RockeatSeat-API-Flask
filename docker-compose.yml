@@ -14,4 +14,4 @@ services:
        # Opens port 3306 on the container
        - '3306'
      volumes:
-       - C:\Users\PC GAIMER\Desktop\ROCKETSEAT\Desafio-RockeatSeat-API-Flask\mysql:/var/lib/mysql
+       - C:\Users\NOTEBRUIKE\Desktop\ROCKETSEAT\Desafio-RockeatSeat-API-Flask\mysql:/var/lib/mysql

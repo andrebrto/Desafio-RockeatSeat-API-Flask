@@ -110,8 +110,9 @@ def hello_world():
     return "HELLO WOLRD"
 
 
+#MEALS 
 
-@app.route("/meal", methods=["POST"])
+@app.route("/meals", methods=["POST"])
 @login_required
 def create_meal():
     data = request.json
@@ -130,7 +131,7 @@ def create_meal():
 
     return jsonify({"message": "Dados invalidos"}) , 400
 
-@app.route("/meal/<int:id_meal>", methods=["PUT"])
+@app.route("/meals/<int:id_meal>", methods=["PUT"])
 @login_required
 def update_meal(id_meal):
     meal = Meal.query.get(id_meal)
@@ -147,7 +148,7 @@ def update_meal(id_meal):
     return jsonify({"message": "Deleção nao permitida"}), 403
         
     
-@app.route("/meal/<int:id_meal>", methods=["DELETE"])
+@app.route("/meals/<int:id_meal>", methods=["DELETE"])
 @login_required
 def delete_meal(id_meal):
     meal = db.session.get(Meal, id_meal)
@@ -159,7 +160,39 @@ def delete_meal(id_meal):
     
     return jsonify({"message": "Deleção nao permitida"}), 403
         
+@app.route("/meals/user/<int:id_user>", methods=["GET"])
+@login_required
+def list_user_meals(id_user):
+    meals = Meal.query.filter_by(user_id=id_user).all()
+    if meals:
+        return jsonify([{
+            'id': Meal.id,
+            'name': Meal.name,
+            'description': Meal.description,
+            'datetime': Meal.datetime,
+            'is_in_diete' : Meal.is_in_diet,
+            'user_id': Meal.user_id
+        } for Meal in meals]),200
 
+    return jsonify({'message': 'Nenhuma refeição encontrada para este usuario'}),400
+
+@app.route("/meals/<int:id_meal>", methods=["GET"])
+@login_required
+def list_meal(id_meal):
+    meal = Meal.query.get(id_meal)
+
+    if meal:
+        return jsonify([{
+
+        'id': meal.id,
+        'name': meal.name,
+        'description': meal.description,
+        'datetime': meal.datetime,
+        'is_in_diete' : meal.is_in_diet,
+        'user_id': meal.user_id
+    }]),200
+
+    return jsonify({'message': 'Nenhuma refeição encontrada'}),400
 
 if __name__== "__main__":
     app.run(debug=True)
